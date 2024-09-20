@@ -12,9 +12,7 @@ class MainController
     public function index(Request $request, Response $response):void
     {
         $response->setStatusCode(400);
-        $response->sendTemplate("HomePage.latte",[
-            "Data"=>"out"
-        ]);
+        $response->sendTemplate("HomePage.latte");
     }
 
 }
