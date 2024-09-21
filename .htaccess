@@ -13,6 +13,6 @@ RewriteCond %{REQUEST_URI} ^/public/upload/
 RewriteCond %{REQUEST_FILENAME} -f
 RewriteRule ^ - [L]
 
-# Avoid redirecting requests already aimed at bootstrap.php
+# Avoid redirecting requests already aimed at index.php
 RewriteCond %{REQUEST_URI} !^/Bootstrap\.php
-RewriteRule ^(.*)$ Bootstrap.php [L]
+RewriteRule ^(.*)$ index.php [L]

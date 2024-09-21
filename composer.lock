@@ -300,7 +300,7 @@
             },
             "autoload": {
                 "files": [
-                    "bootstrap.php"
+                    "index.php"
                 ],
                 "psr-4": {
                     "Symfony\\Polyfill\\Ctype\\": ""
@@ -380,7 +380,7 @@
             },
             "autoload": {
                 "files": [
-                    "bootstrap.php"
+                    "index.php"
                 ],
                 "psr-4": {
                     "Symfony\\Polyfill\\Mbstring\\": ""
@@ -455,7 +455,7 @@
             },
             "autoload": {
                 "files": [
-                    "bootstrap.php"
+                    "index.php"
                 ],
                 "psr-4": {
                     "Symfony\\Polyfill\\Php80\\": ""

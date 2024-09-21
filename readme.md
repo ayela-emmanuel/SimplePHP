@@ -39,7 +39,7 @@ The simplePHP framework provides essential tools to create modern web applicatio
 3. Configure the `public/index.php` file as your entry point for your application.  
 ```php 
 <?php 
-include_once __DIR__."/../Bootstrap.php";
+include_once __DIR__."/../index.php";
 ?>
 ```
 
@@ -132,7 +132,7 @@ class FooController
     }
 }
 ```
-after creating your controller you register them in `Bootstrap.php`:
+after creating your controller you register them in `index.php`:
 
 ```php
 <?php
@@ -256,7 +256,7 @@ $response->json(new MyResponseClass(true,"Data saved successfully."), 200);
 Middleware is central to this framework, allowing you to process requests and responses at different stages of the lifecycle.
 
 **Features**:
-- **Global Middleware**: Register middleware globally in the application bootstrap.
+- **Global Middleware**: Register middleware globally in the application index.
 - **Route-Specific Middleware**: Apply middleware to specific routes using attributes or annotations.
 - **Response Middleware**: Modify the response after the controller has executed.
 
@@ -284,7 +284,7 @@ class AuthMiddleware implements Middleware
 }
 ```
 Applying Your Middleware:  
-Register middleware globally in `Bootstrap.php`
+Register middleware globally in `index.php`
 ```php
 $middlewareStack->register(new AuthMiddleware());
 ```
@@ -343,9 +343,9 @@ $middlewareStack->register(new CorsMiddleware());
 To configure the framework for your environment:
 
 - **Routing**: Configure the routes in `routes.php` or use the `Route` attribute directly in controllers.
-- **Middleware**: Register middleware globally during the application bootstrap or apply them to specific routes.
+- **Middleware**: Register middleware globally during the application index or apply them to specific routes.
 
-In **CPanel/Apache environments**, ensure that `.htaccess` is set up to direct all requests to `Bootstrap.php`:
+In **CPanel/Apache environments**, ensure that `.htaccess` is set up to direct all requests to `index.php`:
 
 ```bash
 # Enable URL rewriting
@@ -363,9 +363,9 @@ RewriteCond %{REQUEST_URI} ^/public/upload/
 RewriteCond %{REQUEST_FILENAME} -f
 RewriteRule ^ - [L]
 
-# Avoid redirecting requests already aimed at bootstrap.php
-RewriteCond %{REQUEST_URI} !^/Bootstrap\.php
-RewriteRule ^(.*)$ Bootstrap.php [L]
+# Avoid redirecting requests already aimed at index.php
+RewriteCond %{REQUEST_URI} !^/index\.php
+RewriteRule ^(.*)$ index.php [L]
 ```
 
 ---
