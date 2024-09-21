@@ -34,9 +34,12 @@ The simplePHP framework provides essential tools to create modern web applicatio
 - PHP 7.4+ (PHP 8+ recommended for attributes support)
 
 #### **Installation Steps**:
-1. Clone the repository or create a new project directory.
-2. Run `composer install` to set up dependencies.
-3. Configure the `public/index.php` file as your entry point for your application.  
+1. Clone the repository or use composer to create project via:
+   ```
+   composer create-project simple-php-web/simple-php-web
+   ```
+3. Run `composer install` to set up dependencies.
+4. Configure the `public/index.php` file as your entry point for your application.  
 ```php 
 <?php 
 include_once __DIR__."/../Bootstrap.php";
