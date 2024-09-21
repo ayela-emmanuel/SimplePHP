@@ -4,8 +4,43 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9d7487efa82091b7c11694663960339d",
+    "content-hash": "bd8dbfa4791dc2db50fd530a41d1e439",
     "packages": [
+        {
+            "name": "ayela-emmanuel/ayela-orm",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ayela-emmanuel/Ayela-PHP-ORM.git",
+                "reference": "0762a46771ad4edbf31d46a002b87b3cd5b7bbac"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ayela-emmanuel/Ayela-PHP-ORM/zipball/0762a46771ad4edbf31d46a002b87b3cd5b7bbac",
+                "reference": "0762a46771ad4edbf31d46a002b87b3cd5b7bbac",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.0"
+            },
+            "default-branch": true,
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "AyelaORM\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "AGPL-3.0-or-later"
+            ],
+            "description": "This packge Is a Minimal ORM Setup for intareacting with your SQL Database using PDO but abstracts the Database to a more OOP Approch",
+            "support": {
+                "issues": "https://github.com/ayela-emmanuel/Ayela-PHP-ORM/issues",
+                "source": "https://github.com/ayela-emmanuel/Ayela-PHP-ORM/tree/v1.0.0"
+            },
+            "time": "2024-09-17T21:14:26+00:00"
+        },
         {
             "name": "graham-campbell/result-type",
             "version": "1.1.x-dev",
@@ -564,7 +599,8 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "latte/latte": 20
+        "latte/latte": 20,
+        "vlucas/phpdotenv": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
