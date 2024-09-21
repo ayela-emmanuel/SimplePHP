@@ -8,8 +8,14 @@ use Internal\Router\Router;
 use Internal\Http\Request;
 use Internal\Http\Response;
 
-$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
-$dotenv->load();
+try {
+    $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+    $dotenv->load();
+} catch (\Throwable $th) {
+    echo "Failed to load ENV: See .env.example For Sample.";
+    die();
+}
+
 
 
 // Initialize Router
