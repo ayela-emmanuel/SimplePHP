@@ -2,6 +2,7 @@
     "name": "simple-php-web/simple-php-web",
     "description": "simple php framework",
     "type": "project",
+    "version": "1.0.0",
     "license": "AGPL-3.0-or-later",
     "autoload": {
         "psr-4": {
