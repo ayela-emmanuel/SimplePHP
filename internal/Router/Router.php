@@ -1,13 +1,13 @@
 <?php
 
 declare(strict_types=1);
-
 namespace Internal\Router;
 
+use Internal\Middleware\RouteMiddleware;
 use Internal\Http\Request;
 use Internal\Http\Response;
 use ReflectionClass;
-use Doctrine\Common\Annotations\AnnotationReader;
+use Internal\Router\Route;
 
 class Router
 {
@@ -39,7 +39,14 @@ class Router
             // Register routes
             foreach ($routeAttributes as $attribute) {
                 $route = $attribute->newInstance();
-                $path = preg_replace('/\/{2,}/',"/",$prefix.'/'.$route->path);
+                $path = $route->path. '/' . $prefix  ;
+
+                $path = preg_replace('/\/+/', '/', $path);
+                $path = rtrim($path, '/');
+                if ($path === '') {
+                    $path = '/';
+                }
+
                 $this->routes[$route->method][$path] = [
                     'controller' => $controller,
                     'method' => $method->getName(),
@@ -84,15 +91,36 @@ class Router
             // Call controller method
             call_user_func([$route['controller'], $route['method']], $request, $response);
         } else {
+            if(isset($_ENV["TEMPLATE_404"])){
+                if($_ENV["TEMPLATE_404"]){
+                    $response->setStatusCode(200)->sendTemplate($_ENV["TEMPLATE_404"]);
+                    return;
+                }
+                
+            }
             $response->setStatusCode(404)->send('404 Not Found');
+
+            
         }
     }
 
     protected function applyMiddleware(array $middlewares, Request $request, Response $response): void
     {
-        foreach ($middlewares as $middlewareClass) {
-            $middleware = new $middlewareClass();
-            $middleware->handle($request, $response, function () {});
+        foreach ($middlewares as $middlewareClasses) {
+            foreach ($middlewareClasses as $middlewareClass) {
+                
+                if (!class_exists($middlewareClass)) {
+                    throw new \InvalidArgumentException("Middleware class {$middlewareClass} does not exist.");
+                }
+
+                $middleware = new $middlewareClass();
+
+                
+                if (!method_exists($middleware, 'handle')) {
+                    throw new \LogicException("Middleware class {$middlewareClass} must implement a 'handle' method.");
+                }
+                $middleware->handle($request, $response, function () {});
+            }
         }
     }
 

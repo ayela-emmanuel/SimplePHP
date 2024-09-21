@@ -1,6 +1,6 @@
 <?php
 
-namespace Internal\Router;
+namespace Internal\Middleware;
 
 #[\Attribute]
 class RouteMiddleware

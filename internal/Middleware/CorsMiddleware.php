@@ -7,7 +7,7 @@ namespace Internal\Middleware;
 use Internal\Http\Request;
 use Internal\Http\Response;
 
-class CorsMiddleware
+class CorsMiddleware implements Middleware
 {
     // Allowed origins for CORS requests
     protected array $allowedOrigins = ['*']; // You can specify allowed origins here like 'https://example.com'

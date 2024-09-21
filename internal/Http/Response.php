@@ -27,6 +27,12 @@ class Response
     {
         echo $body;
     }
+
+    public function json(object $data): void
+    {
+        $this->setContentType("application/json");
+        echo json_encode($data);
+    }
     /**
      * Renders Template to Frontend
      * takes template name and parameters

@@ -17,14 +17,14 @@ $router = new Router();
 
 // Add controllers
 //API
-$router->addRoute(new App\Controllers\API\IndexController());
+$router->addRoute(new App\Controllers\API\IndexController(),"api");
 //WEB
 $router->addRoute(new App\Controllers\WEB\MainController());
 
 // Add Global Middlewares
 $globalMiddlewares = [
     Internal\Middleware\LogRequestMiddleware::class,
-    Internal\Middleware\CorsMiddleware::class,
+    Internal\Middleware\CorsMiddleware::class
 ];
 
 // Handle Request

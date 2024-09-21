@@ -11,7 +11,7 @@ class MainController
     #[Route("GET","/")]
     public function index(Request $request, Response $response):void
     {
-        $response->setStatusCode(400);
+        $response->setStatusCode(200);
         $response->sendTemplate("HomePage.latte");
     }
 

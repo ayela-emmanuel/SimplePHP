@@ -1,17 +1,23 @@
-<?php
-
+<?php 
 declare(strict_types=1);
 
-namespace Internal\Middleware;
+namespace App\Middleware;
 
 use Internal\Http\Request;
 use Internal\Http\Response;
+use Internal\Middleware\Middleware;
 
-class LogRequestMiddleware implements Middleware
+
+
+class DemoMiddleware implements Middleware
 {
+    
     public function handle(Request $request, Response $response, callable $next): void
     {
-        error_log("Request received: " . $request->getPath());
+        //logic
         $next();  // Call the next middleware or controller action
+        //logic after
     }
 }
+
+
