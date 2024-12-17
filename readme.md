@@ -17,7 +17,8 @@
     - [Middleware Support](#middleware-support)
     - [CORS Middleware](#cors-middleware)
 5. [Configuration](#configuration)
-6. [Example Usage](#example-usage)
+6. [Debugging](#debugging)
+7. [Example Usage](#example-usage)
 
 
 ---
@@ -370,6 +371,17 @@ RewriteRule ^ - [L]
 RewriteCond %{REQUEST_URI} !^/index\.php
 RewriteRule ^(.*)$ index.php [L]
 ```
+
+---
+
+### **5. Debugging** <a id="debugging"></a>
+
+When the application is running we can find logs at:
+
+**Log Route**:  `/dev/logs`
+
+this will automatically log in the event of a 500 error  
+also the logs can be found in `/logs/.log`
 
 ---
 

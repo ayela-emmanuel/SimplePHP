@@ -13,6 +13,7 @@ class MainController
     {
         $response->setStatusCode(200);
         $response->sendTemplate("HomePage.latte");
+        
     }
 
 }

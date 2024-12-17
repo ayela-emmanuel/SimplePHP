@@ -7,6 +7,7 @@ require_once __DIR__ . '/vendor/autoload.php';
 use Internal\Router\Router;
 use Internal\Http\Request;
 use Internal\Http\Response;
+use Internal\Utils\GlobalLogger;
 
 try {
     $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
@@ -22,6 +23,8 @@ try {
 $router = new Router();
 
 // Add controllers
+//Internal
+$router->addRoute(new Internal\Controllers\DebuggingController());
 //API
 $router->addRoute(new App\Controllers\API\IndexController(),"api");
 //WEB
@@ -42,7 +45,4 @@ foreach ($globalMiddlewares as $middlewareClass) {
     $middleware->handle($request, $response, fn() => null); // Global middleware
 }
 
-
-
-// Route handling and response middleware
 $router->handle($request, $response);
