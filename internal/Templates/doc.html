@@ -73,6 +73,14 @@
         <div>
             <strong>Description:</strong> {$route['comment'] ?? 'No description available'}
         </div>
+
+        <!-- Request Structure -->
+        {if isset($route['requestModel'])}
+        <div>
+            <strong>Request Structure:</strong>
+            <pre>{json_encode($route['requestModel']['properties'], JSON_PRETTY_PRINT)}</pre>
+        </div>
+        {/if}
         <!-- Test Endpoint Button -->
         {var $handle = uniqid("response-")}
         {var $queryId = uniqid("query-")}
