@@ -28,7 +28,8 @@ class GlobalLogger
     }
     public static function load(): string
     {
-        return file_get_contents(GlobalLogger::$logFile);
+        
+        return file_exists(GlobalLogger::$logFile) ? file_get_contents(GlobalLogger::$logFile) : "";
     }
 }
  
