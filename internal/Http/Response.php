@@ -45,6 +45,7 @@ class Response
     {
         $latte = new \Latte\Engine;
         $templateDirectory = __DIR__ . "/../../src/" . $_ENV['TEMPLATE_DIR'];
+        $latte->setTempDirectory(__DIR__ . '/../../cache');
         if (!$fullpath) {
             $latte->setLoader(new \Latte\Loaders\FileLoader($templateDirectory));
             $latte->render($templateName, $parameters);

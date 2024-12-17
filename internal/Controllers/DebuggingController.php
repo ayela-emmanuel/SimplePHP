@@ -112,8 +112,11 @@ class DebuggingController
         }
         //var_dump($filteredRoutes);      
         $response->sendTemplate(__DIR__."/../Templates/doc.html",["data"=>$filteredRoutes],true);
+    
     }
 
+    
+    
 }
 
 

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "bd8dbfa4791dc2db50fd530a41d1e439",
+    "content-hash": "bbbc82bfa463b38fab278c08c7516bf3",
     "packages": [
         {
             "name": "ayela-emmanuel/ayela-orm",
@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ayela-emmanuel/Ayela-PHP-ORM.git",
-                "reference": "0762a46771ad4edbf31d46a002b87b3cd5b7bbac"
+                "reference": "589dfaafa588228f07f12d1ce0ba635458d1dbc4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ayela-emmanuel/Ayela-PHP-ORM/zipball/0762a46771ad4edbf31d46a002b87b3cd5b7bbac",
-                "reference": "0762a46771ad4edbf31d46a002b87b3cd5b7bbac",
+                "url": "https://api.github.com/repos/ayela-emmanuel/Ayela-PHP-ORM/zipball/589dfaafa588228f07f12d1ce0ba635458d1dbc4",
+                "reference": "589dfaafa588228f07f12d1ce0ba635458d1dbc4",
                 "shasum": ""
             },
             "require": {
@@ -34,12 +34,12 @@
             "license": [
                 "AGPL-3.0-or-later"
             ],
-            "description": "This packge Is a Minimal ORM Setup for intareacting with your SQL Database using PDO but abstracts the Database to a more OOP Approch",
+            "description": "This packge Is a Minimal ORM Setup for interacting with your SQL Database using PDO but abstracts the Database to a more OOP Approch",
             "support": {
                 "issues": "https://github.com/ayela-emmanuel/Ayela-PHP-ORM/issues",
-                "source": "https://github.com/ayela-emmanuel/Ayela-PHP-ORM/tree/v1.0.0"
+                "source": "https://github.com/ayela-emmanuel/Ayela-PHP-ORM/tree/master"
             },
-            "time": "2024-09-17T21:14:26+00:00"
+            "time": "2024-09-30T17:17:49+00:00"
         },
         {
             "name": "graham-campbell/result-type",
@@ -106,16 +106,16 @@
         },
         {
             "name": "latte/latte",
-            "version": "dev-master",
+            "version": "v3.0.20",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nette/latte.git",
-                "reference": "56b92374a962c99adfb1e68edee25cafa391600d"
+                "reference": "4db7a5502f8cef02fffa84fc9c34a635d9c79d4d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nette/latte/zipball/56b92374a962c99adfb1e68edee25cafa391600d",
-                "reference": "56b92374a962c99adfb1e68edee25cafa391600d",
+                "url": "https://api.github.com/repos/nette/latte/zipball/4db7a5502f8cef02fffa84fc9c34a635d9c79d4d",
+                "reference": "4db7a5502f8cef02fffa84fc9c34a635d9c79d4d",
                 "shasum": ""
             },
             "require": {
@@ -142,7 +142,6 @@
                 "nette/php-generator": "to use tag {templatePrint}",
                 "nette/utils": "to use filter |webalize"
             },
-            "default-branch": true,
             "bin": [
                 "bin/latte-lint"
             ],
@@ -187,9 +186,9 @@
             ],
             "support": {
                 "issues": "https://github.com/nette/latte/issues",
-                "source": "https://github.com/nette/latte/tree/master"
+                "source": "https://github.com/nette/latte/tree/v3.0.20"
             },
-            "time": "2024-09-11T11:04:26+00:00"
+            "time": "2024-10-08T00:58:27+00:00"
         },
         {
             "name": "phpoption/phpoption",
@@ -294,13 +293,13 @@
             "type": "library",
             "extra": {
                 "thanks": {
-                    "name": "symfony/polyfill",
-                    "url": "https://github.com/symfony/polyfill"
+                    "url": "https://github.com/symfony/polyfill",
+                    "name": "symfony/polyfill"
                 }
             },
             "autoload": {
                 "files": [
-                    "index.php"
+                    "bootstrap.php"
                 ],
                 "psr-4": {
                     "Symfony\\Polyfill\\Ctype\\": ""
@@ -374,13 +373,13 @@
             "type": "library",
             "extra": {
                 "thanks": {
-                    "name": "symfony/polyfill",
-                    "url": "https://github.com/symfony/polyfill"
+                    "url": "https://github.com/symfony/polyfill",
+                    "name": "symfony/polyfill"
                 }
             },
             "autoload": {
                 "files": [
-                    "index.php"
+                    "bootstrap.php"
                 ],
                 "psr-4": {
                     "Symfony\\Polyfill\\Mbstring\\": ""
@@ -449,13 +448,13 @@
             "type": "library",
             "extra": {
                 "thanks": {
-                    "name": "symfony/polyfill",
-                    "url": "https://github.com/symfony/polyfill"
+                    "url": "https://github.com/symfony/polyfill",
+                    "name": "symfony/polyfill"
                 }
             },
             "autoload": {
                 "files": [
-                    "index.php"
+                    "bootstrap.php"
                 ],
                 "psr-4": {
                     "Symfony\\Polyfill\\Php80\\": ""
@@ -599,8 +598,8 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "latte/latte": 20,
-        "vlucas/phpdotenv": 20
+        "vlucas/phpdotenv": 20,
+        "ayela-emmanuel/ayela-orm": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
