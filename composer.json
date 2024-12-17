@@ -2,7 +2,7 @@
     "name": "simple-php-web/simple-php-web",
     "description": "simple php framework",
     "type": "project",
-    "version": "1.0.0",
+    "version": "1.0.2",
     "license": "AGPL-3.0-or-later",
     "autoload": {
         "psr-4": {
@@ -15,10 +15,10 @@
             "name": "Ayela Emmanuel"
         }
     ],
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "require": {
         "latte/latte": "3.0.20",
-        "vlucas/phpdotenv": "^5.6@dev",
-        "ayela-emmanuel/ayela-orm": "dev-master"
+        "vlucas/phpdotenv": "5.6.1",
+        "ayela-emmanuel/ayela-orm": "1.0.1"
     }
 }
