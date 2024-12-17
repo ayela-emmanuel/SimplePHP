@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Explorer</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f9f9f9;
+        }
+        .endpoint {
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            padding: 15px;
+            background-color: #fff;
+        }
+        .method {
+            font-weight: bold;
+            text-transform: uppercase;
+            margin-right: 10px;
+        }
+        .get { color: green; }
+        .post { color: blue; }
+        .delete { color: red; }
+        button {
+            margin-top: 10px;
+            padding: 8px 12px;
+            border: none;
+            border-radius: 5px;
+            background-color: #007bff;
+            color: #fff;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        pre {
+            background-color: #272822;
+            color: #f8f8f2;
+            padding: 10px;
+            overflow: auto;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>API Explorer</h1>
+
+    <!-- Loop through API routes -->
+    {foreach $data as $route}
+    <div class="endpoint">
+        <!-- Method and Path -->
+        <div>
+            <span class="method {$route['method']|lower}">{$route['method']}</span>
+            <div style="background-color: black; color: lightcyan; border-radius: 6px; padding: 1px 8px; display: block; font-family: Arial, Helvetica, sans-serif;">
+                {$route['path']}
+            </div> 
+        </div>
+
+        <!-- Controller and Action -->
+        <div>
+            <small>
+                <strong>Controller:</strong> {$route['controller']}<br>
+                <strong>Action:</strong> {$route['action']}
+            </small>
+        </div>
+        <hr>
+
+        <!-- Description -->
+        <div>
+            <strong>Description:</strong> {$route['comment'] ?? 'No description available'}
+        </div>
+        <!-- Test Endpoint Button -->
+        {var $handle = uniqid("response-")}
+        {var $queryId = uniqid("query-")}
+        {var $payloadId = uniqid("payload-")}
+        {var $path = $route['path']}
+        {var $method = $route['method']}
+
+        <!-- Input for Query Parameters -->
+        <div>
+            <label for={$queryId}>Query Parameters:</label><br>
+            <textarea id={$queryId} rows="2" cols="50">{"param1": "value1"}</textarea>
+        </div>
+        
+        <!-- Input for Request Payload -->
+        {if $route['method'] !== 'GET' && $route['method'] !== 'DELETE'}
+        <div>
+            <label for={$payloadId}>Request Body (JSON):</label><br>
+            <textarea id={$payloadId} rows="4" cols="50">{}</textarea>
+        </div>
+        {/if}
+
+        
+        <button onclick="testApi({$method}, {$path}, {$handle}, {$queryId},{$payloadId})">
+            Test {$route['method']} Endpoint
+        </button>
+        <div id="{$handle}" style="margin-top: 10px;"></div>
+    </div>
+    {/foreach}
+
+    {syntax off}
+    <script>
+        async function testApi(method, path, resid, queryId, payloadId) {
+            let url = window.location.origin + path; // Base URL
+            const responseContainer = document.getElementById(resid);
+
+            // Fetch query parameters from input field
+            let queryParams = {};
+            try {
+                const queryInput = document.getElementById(queryId).value;
+                queryParams = JSON.parse(queryInput);
+                const queryString = new URLSearchParams(queryParams).toString();
+                url += `?${queryString}`;
+            } catch (e) {
+                responseContainer.innerHTML = `<strong>Error:</strong> <pre>Invalid JSON in Query Parameters field.</pre>`;
+                return;
+            }
+
+            // Fetch payload from input field (for POST, PUT)
+            let payload = null;
+            if (method !== 'GET' && method !== 'DELETE') {
+                try {
+                    const payloadInput = document.getElementById(payloadId).value;
+                    payload = JSON.parse(payloadInput);
+                } catch (e) {
+                    responseContainer.innerHTML = `<strong>Error:</strong> <pre>Invalid JSON in Request Body field.</pre>`;
+                    return;
+                }
+            }
+
+            // Configure fetch options
+            const options = {
+                method: method,
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: payload ? JSON.stringify(payload) : null
+            };
+
+            try {
+                const response = await fetch(url, options);
+                const contentType = response.headers.get('Content-Type');
+
+                if (contentType && contentType.includes('application/json')) {
+                    const data = await response.json();
+                    responseContainer.innerHTML = `
+                        <strong>Response:</strong>
+                        <pre>${JSON.stringify(data, null, 2)}</pre>
+                    `;
+                } else {
+                    const htmlContent = await response.text();
+                    responseContainer.innerHTML = `
+                        <strong>Response:</strong>
+                        <iframe srcdoc="${htmlContent.replace(/"/g, '&quot;').replace(/'/g, '&#39;')}" 
+                                style="width: 100%; height: 300px; border: 1px solid #ccc;">
+                        </iframe>
+                    `;
+                }
+            } catch (error) {
+                responseContainer.innerHTML = `
+                    <strong>Error:</strong>
+                    <pre>${error}</pre>
+                `;
+            }
+        }
+    </script>
+</body>
+</html>

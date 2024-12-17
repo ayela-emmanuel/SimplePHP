@@ -19,19 +19,29 @@ try {
 
 
 // Initialize Router
-$router = new Router();
+const ROUTER = new Router();
 
 // Add controllers
+
+
 //API
-$router->addRoute(new App\Controllers\API\IndexController(),"api");
+ROUTER->addRoute(new App\Controllers\API\IndexController(),"api");
 //WEB
-$router->addRoute(new App\Controllers\WEB\MainController());
+ROUTER->addRoute(new App\Controllers\WEB\MainController());
 
 // Add Global Middlewares
 $globalMiddlewares = [
     Internal\Middleware\LogRequestMiddleware::class,
     Internal\Middleware\CorsMiddleware::class
 ];
+
+
+//Internal
+//ENABLE_DEBUG
+if($_ENV["ENABLE_DEBUG"]?? false){
+    ROUTER->addRoute(new Internal\Controllers\DebuggingController(),"/debug");
+}
+
 
 // Handle Request
 $request = new Request();
@@ -42,7 +52,4 @@ foreach ($globalMiddlewares as $middlewareClass) {
     $middleware->handle($request, $response, fn() => null); // Global middleware
 }
 
-
-
-// Route handling and response middleware
-$router->handle($request, $response);
+ROUTER->handle($request, $response);

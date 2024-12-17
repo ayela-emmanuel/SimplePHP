@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace Internal\Http;
 
+use Internal\Utils\GlobalLogger;
+use Throwable;
+
 class Request
 {
     protected array $query;
@@ -32,7 +35,14 @@ class Request
 
     public function getPath(): string
     {
-        return parse_url($this->server['REQUEST_URI'] ?? "/", PHP_URL_PATH);
+        try{
+            $path = parse_url($this->server['REQUEST_URI'] ?? "/", PHP_URL_PATH);
+            return $path;
+        }catch(Throwable $t){
+            GlobalLogger::log("!!!! Invalid Path From The User: $t","ERROR");
+            header("Location: /");
+            exit;
+        }    
     }
 
     /**

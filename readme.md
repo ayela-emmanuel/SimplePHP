@@ -16,8 +16,10 @@
     - [Response Handling](#response-handling)
     - [Middleware Support](#middleware-support)
     - [CORS Middleware](#cors-middleware)
+    - [Auto Documentation(API Explorer)](#auto-doc)
 5. [Configuration](#configuration)
-6. [Example Usage](#example-usage)
+6. [Debugging](#debugging)
+7. [Example Usage](#example-usage)
 
 
 ---
@@ -341,6 +343,82 @@ $middlewareStack->register(new CorsMiddleware());
 
 ---
 
+---
+
+#### **4.7. Auto Documentation** <a id="auto-doc"></a>
+## **1. `AutoDocAttribute`**
+
+The `AutoDocAttribute` is used to automatically generate API documentation for controllers and routes. It signals that the annotated class or method should be included in the API documentation generation process.
+
+To access the api documentation go to `/debug/docs/api`.
+
+### **Usage**  
+You apply the attribute to a class or controller that contains routes:
+
+```php
+#[AutoDocAttribute]
+class IndexController
+{
+    #[Route("GET", "/")]
+    public function home(Request $request, Response $response)
+    {
+        $response->setStatusCode(200);
+        $response->json(new ApiResponseModel(true, "Welcome to simple php"));
+    }
+}
+```
+
+### **Effects**  
+- Automatically scans and includes the annotated class or method in the API documentation tool.
+- Collects metadata like route paths, HTTP methods, and responses for documentation generation.
+
+
+## **2. `AutoDocComment`**
+
+### **Purpose**  
+The `AutoDocComment` attribute allows you to add custom comments or descriptions for individual API routes. These comments are included in the auto-generated documentation.
+
+### **Usage**  
+You apply the attribute to specific methods where you want to add descriptive comments:
+
+```php
+#[AutoDocComment("This endpoint returns a test response.")]
+#[Route("POST", "/test")]
+public function test(Request $request, Response $response)
+{
+    $response->setStatusCode(200);
+    $response->json(new ApiResponseModel(true, "Welcome to simple php"));
+}
+```
+
+### **Effects**  
+- Adds a human-readable description to the API documentation for the method or route.
+- Provides clarity on the purpose of the endpoint to developers or API consumers.
+---
+
+
+## **3. `RequestModelAttribute`**
+
+### **Purpose**  
+The `RequestModelAttribute` is used to bind and validate incoming request data against a specified model class. It ensures the request payload adheres to a defined structure.
+
+### **Usage**  
+You annotate a method with the attribute, passing a model class that handles the request data validation:
+
+```php
+#[Route("GET", "/")]
+#[RequestModelAttribute(ApiResponseModel::class)]
+public function home(Request $request, Response $response)
+{
+    $response->setStatusCode(200);
+    $response->json(new ApiResponseModel(true, "Welcome to simple php"));
+}
+```
+
+### **Effects**  
+- Simply for Documentation Generation(may be used for validation in the near future)
+
+
 ### **5. Configuration** <a id="configuration"></a>
 
 To configure the framework for your environment:
@@ -370,6 +448,17 @@ RewriteRule ^ - [L]
 RewriteCond %{REQUEST_URI} !^/index\.php
 RewriteRule ^(.*)$ index.php [L]
 ```
+
+---
+
+### **5. Debugging** <a id="debugging"></a>
+
+When the application is running we can find logs at:
+
+**Log Route**:  `/dev/logs`
+
+this will automatically log in the event of a 500 error  
+also the logs can be found in `/logs/.log`
 
 ---
 
