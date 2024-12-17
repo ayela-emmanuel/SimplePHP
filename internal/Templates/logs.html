@@ -106,7 +106,7 @@
     <script>
         function clearLogs() {
             if (confirm("Are you sure you want to clear all logs?")) {
-                fetch("/dev/logs/clear", {
+                fetch("/debug/logs/clear", {
                     method: 'DELETE'
                 }).then(response => {
                     if (response.ok) {

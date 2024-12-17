@@ -7,7 +7,6 @@ require_once __DIR__ . '/vendor/autoload.php';
 use Internal\Router\Router;
 use Internal\Http\Request;
 use Internal\Http\Response;
-use Internal\Utils\GlobalLogger;
 
 try {
     $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
@@ -20,21 +19,29 @@ try {
 
 
 // Initialize Router
-$router = new Router();
+const ROUTER = new Router();
 
 // Add controllers
-//Internal
-$router->addRoute(new Internal\Controllers\DebuggingController());
+
+
 //API
-$router->addRoute(new App\Controllers\API\IndexController(),"api");
+ROUTER->addRoute(new App\Controllers\API\IndexController(),"api");
 //WEB
-$router->addRoute(new App\Controllers\WEB\MainController());
+ROUTER->addRoute(new App\Controllers\WEB\MainController());
 
 // Add Global Middlewares
 $globalMiddlewares = [
     Internal\Middleware\LogRequestMiddleware::class,
     Internal\Middleware\CorsMiddleware::class
 ];
+
+
+//Internal
+//ENABLE_DEBUG
+if($_ENV["ENABLE_DEBUG"]?? false){
+    ROUTER->addRoute(new Internal\Controllers\DebuggingController(),"/debug");
+}
+
 
 // Handle Request
 $request = new Request();
@@ -45,4 +52,4 @@ foreach ($globalMiddlewares as $middlewareClass) {
     $middleware->handle($request, $response, fn() => null); // Global middleware
 }
 
-$router->handle($request, $response);
+ROUTER->handle($request, $response);

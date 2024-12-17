@@ -8,10 +8,15 @@ use Internal\Http\Request;
 use Internal\Http\Response;
 use ReflectionClass;
 use Internal\Router\Route;
+use Internal\Utils\GlobalLogger;
 
 class Router
 {
     protected array $routes = [];
+
+    public function GetRoutes(): array{
+        return array_merge(array(), $this->routes);;
+    }
 
     public function addRoute(object $controller, string $prefix = "/"): void
     {
@@ -39,8 +44,11 @@ class Router
             // Register routes
             foreach ($routeAttributes as $attribute) {
                 $route = $attribute->newInstance();
-                $path = $route->path. '/' . $prefix  ;
-
+                if(!\str_starts_with($prefix,"/")){
+                    $prefix = "/".$prefix;
+                }
+                $path = strtolower($prefix. '/' .$route->path);
+                
                 $path = preg_replace('/\/+/', '/', $path);
                 $path = rtrim($path, '/');
                 if ($path === '') {
@@ -79,12 +87,14 @@ class Router
 
     public function handle(Request $request, Response $response): void
     {
-        try{
-            // Route handling and response middleware
-            
+        try {
+            //code...
+        
             $method = $request->getMethod();
-            $path = $request->getPath();
-
+            $path = rtrim(strtolower($request->getPath()), '/');
+            if(!$path){
+                $path = "/";
+            }
             if (isset($this->routes[$method][$path])) {
                 $route = $this->routes[$method][$path];
 
@@ -96,7 +106,7 @@ class Router
             } else {
                 if(isset($_ENV["TEMPLATE_404"])){
                     if($_ENV["TEMPLATE_404"]){
-                        $response->setStatusCode(200)->sendTemplate($_ENV["TEMPLATE_404"]);
+                        $response->setStatusCode(404)->sendTemplate($_ENV["TEMPLATE_404"]);
                         return;
                     }
                     
@@ -105,9 +115,8 @@ class Router
 
                 
             }
-        }catch(\Exception $e){
-            http_response_code(500);
-            \Internal\Utils\GlobalLogger::log("$e");
+        } catch (\Throwable $th) {
+            GlobalLogger::log("On The Routing Level: $th","ERROR");
         }
     }
 
