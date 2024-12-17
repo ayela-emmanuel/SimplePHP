@@ -31,6 +31,7 @@ class IndexController
         $response->setStatusCode(200);
         $response->json(new ApiResponseModel(true,"Welcome to simple php"));
     }
+    
 }
 
 
