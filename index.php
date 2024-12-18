@@ -3,19 +3,11 @@
 declare(strict_types=1);
 
 require_once __DIR__ . '/vendor/autoload.php';
+require_once __DIR__ . '/def.php';
 
 use Internal\Router\Router;
 use Internal\Http\Request;
 use Internal\Http\Response;
-
-try {
-    $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
-    $dotenv->load();
-} catch (\Throwable $th) {
-    echo "Failed to load ENV: See .env.example For Sample.";
-    die();
-}
-
 
 
 // Initialize Router
@@ -38,7 +30,7 @@ $globalMiddlewares = [
 
 //Internal
 //ENABLE_DEBUG
-if($_ENV["ENABLE_DEBUG"]?? false){
+if(DEBUG_MODE){
     ROUTER->addRoute(new Internal\Controllers\DebuggingController(),"/debug");
 }
 
