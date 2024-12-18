@@ -41,7 +41,7 @@ class Response
      * takes template name and parameters
      * @return void
      */
-    public function sendTemplate(string $templateName, array $parameters = [], bool $fullpath = false): void
+    public function sendTemplate(string $templateName, $parameters = [], bool $fullpath = false): void
     {
         $latte = new \Latte\Engine;
         $templateDirectory = __DIR__ . "/../../src/" . $_ENV['TEMPLATE_DIR'];

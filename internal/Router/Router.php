@@ -116,7 +116,10 @@ class Router
                 
             }
         } catch (\Throwable $th) {
-            GlobalLogger::log("On The Routing Level: $th","ERROR");
+            if($_ENV["ENABLE_DEBUG"]?? false){
+                GlobalLogger::log("On The Routing Level: $th","ERROR");
+            }
+            $response->setStatusCode(500)->send('Internal Server Error');
         }
     }
 

@@ -19,7 +19,8 @@
     - [Auto Documentation(API Explorer)](#auto-doc)
 5. [Configuration](#configuration)
 6. [Debugging](#debugging)
-7. [Example Usage](#example-usage)
+7. [DataTransformer](#data-transformer)
+8. [Example Usage](#example-usage)
 
 
 ---
@@ -451,7 +452,7 @@ RewriteRule ^(.*)$ index.php [L]
 
 ---
 
-### **5. Debugging** <a id="debugging"></a>
+### **6. Debugging** <a id="debugging"></a>
 
 When the application is running we can find logs at:
 
@@ -461,8 +462,146 @@ this will automatically log in the event of a 500 error
 also the logs can be found in `/logs/.log`
 
 ---
+### **7. DataTransformer** <a id="data-transformer"></a>
 
-### **6. Example Usage** <a id="example-usage"></a>
+## Overview
+The `DataTransformer` class provides utility methods for transforming data between arrays and objects, validating data, and mapping data formats based on specified mappings.
+
+---
+
+## Methods
+
+### 1. `deserialize`
+#### Description:
+Deserializes an associative array into an object of the specified type.
+
+#### Template:
+- `@template T`
+
+#### Parameters:
+- `array<string, mixed> $data`: The array to deserialize.
+- `class-string<T> $modelType`: The fully qualified class name of the target object.
+
+#### Returns:
+- `T`: The deserialized object.
+
+#### Throws:
+- `InvalidArgumentException`: If the specified class does not exist or if there are unexpected keys in the input data.
+
+#### Example:
+```php
+$data = ['name' => 'John', 'age' => 30];
+$person = DataTransformer::deserialize($data, Person::class);
+```
+
+---
+
+### 2. `serialize`
+#### Description:
+Serializes an object into an associative array.
+
+#### Parameters:
+- `object $object`: The object to serialize.
+
+#### Returns:
+- `array<string, mixed>`: The serialized array.
+
+#### Example:
+```php
+$person = new Person();
+$person->name = 'John';
+$person->age = 30;
+$data = DataTransformer::serialize($person);
+```
+
+---
+
+### 3. `validateData`
+#### Description:
+Validates the input data against the required properties of a given model class.
+
+#### Template:
+- `@template T`
+
+#### Parameters:
+- `array<string, mixed> $data`: The data to validate.
+- `class-string<T> $modelType`: The fully qualified class name of the target model.
+
+#### Returns:
+- `void`
+
+#### Throws:
+- `InvalidArgumentException`: If the specified class does not exist or if required properties are missing from the data.
+
+#### Example:
+```php
+$data = ['name' => 'John'];
+DataTransformer::validateData($data, Person::class);
+```
+
+---
+
+### 4. `mapData`
+#### Description:
+Transforms an associative array into a new format based on a mapping configuration.
+
+#### Parameters:
+- `array<string, mixed> $data`: The source data.
+- `array<string, string> $mapping`: An associative array mapping source keys to target keys.
+
+#### Returns:
+- `array<string, mixed>`: The transformed array.
+
+#### Example:
+```php
+$data = ['firstName' => 'John', 'lastName' => 'Doe'];
+$mapping = ['firstName' => 'first_name', 'lastName' => 'last_name'];
+$transformed = DataTransformer::mapData($data, $mapping);
+```
+
+---
+
+## Usage Examples
+
+### Deserialization and Serialization:
+```php
+// Define a class
+class Person {
+    public $name;
+    public $age;
+
+    public function validate() {
+        if (empty($this->name) || $this->age < 0) {
+            throw new InvalidArgumentException("Invalid data");
+        }
+    }
+}
+
+// Deserialize
+$data = ['name' => 'John', 'age' => 30];
+$person = DataTransformer::deserialize($data, Person::class);
+
+// Serialize
+$serializedData = DataTransformer::serialize($person);
+```
+
+### Validation:
+```php
+$data = ['name' => 'Jane'];
+DataTransformer::validateData($data, Person::class);
+```
+
+### Data Mapping:
+```php
+$data = ['firstName' => 'John', 'lastName' => 'Smith'];
+$mapping = ['firstName' => 'first_name', 'lastName' => 'last_name'];
+$transformedData = DataTransformer::mapData($data, $mapping);
+```
+
+
+
+---
+### **7. Example Usage** <a id="example-usage"></a>
 
 Here's an example of a controller with a simple route, file upload, and response:
 
